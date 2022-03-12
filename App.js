@@ -2,6 +2,7 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, SafeAreaView, FlatList } from 'react-native';
 import { ColorBox } from './components/ColorBox';
+import { NavigationContainer } from '@react-navigation/native';
 
 const COLORS = [
   { colorName: 'Base03', hexCode: '#002b36' },
@@ -24,24 +25,26 @@ const COLORS = [
 
 export default function App() {
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <FlatList
-        style={styles.container}
-        data={COLORS}
-        keyExtractor={(item) => item.colorName}
-        renderItem={({ item }) => {
-          return (
-            <ColorBox
-              colorName={item.colorName}
-              hexCode={item.hexCode}
-              luminosity={item.luminosity}
-            />
-          );
-        }}
-        ListHeaderComponent={<Text style={styles.title}>Solarized</Text>}
-      />
-      <StatusBar style="auto" />
-    </SafeAreaView>
+    <NavigationContainer>
+      <SafeAreaView style={styles.safeArea}>
+        <FlatList
+          style={styles.container}
+          data={COLORS}
+          keyExtractor={(item) => item.colorName}
+          renderItem={({ item }) => {
+            return (
+              <ColorBox
+                colorName={item.colorName}
+                hexCode={item.hexCode}
+                luminosity={item.luminosity}
+              />
+            );
+          }}
+          ListHeaderComponent={<Text style={styles.title}>Solarized</Text>}
+        />
+        <StatusBar style="auto" />
+      </SafeAreaView>
+    </NavigationContainer>
   );
 }
 
