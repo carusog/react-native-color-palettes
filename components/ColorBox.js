@@ -12,7 +12,7 @@ export const ColorBox = ({ colorName, hexCode, luminosity }) => {
         : 'white',
   };
   return (
-    <View style={[styles.color, boxColor]}>
+    <View style={[styles.colorBox, boxColor]}>
       <Text style={[styles.colorText, textColor]}>
         {colorName}: {hexCode}
       </Text>
@@ -21,11 +21,16 @@ export const ColorBox = ({ colorName, hexCode, luminosity }) => {
 };
 
 const styles = StyleSheet.create({
-  color: {
+  colorBox: {
     width: 'auto',
     marginBottom: 8,
     padding: 10,
     borderRadius: 4,
+    shadowColor: 'black',
+    shadowOpacity: 0.3,
+    shadowOffset: { width: 0, height: 1 },
+    shadowRadius: 2,
+    elevation: 10,
   },
   colorText: {
     textAlign: 'center',
