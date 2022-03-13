@@ -8,11 +8,11 @@ import {
 } from 'react-native';
 
 export const PalettePreview = ({ colorPalette, maxColors, handlePress }) => {
-  const { colors, name } = colorPalette;
+  const { colors, paletteName } = colorPalette;
   const colorsToDisplay = colors.slice(0, maxColors || 3);
   return (
     <TouchableOpacity onPress={handlePress}>
-      <Text style={styles.paletteName}>{name}</Text>
+      <Text style={styles.paletteName}>{paletteName}</Text>
       <FlatList
         style={styles.colorsWrapper}
         data={colorsToDisplay}
