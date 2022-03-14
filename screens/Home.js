@@ -1,8 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, StyleSheet, FlatList } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  Text,
+} from 'react-native';
 import { PalettePreview } from '../components/PalettePreview';
 
-export const Home = ({ navigation }) => {
+export const Home = ({ navigation, route }) => {
+  const newColorPalette = route.params?.newColorPalette;
   const [colorPalettes, setColorPalettes] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -28,8 +35,21 @@ export const Home = ({ navigation }) => {
     }, 2000);
   }, []);
 
+  useEffect(() => {
+    if (newColorPalette) {
+      setColorPalettes([newColorPalette, ...colorPalettes]);
+    }
+  }, [newColorPalette]);
+
   return (
     <View style={styles.home}>
+      {/* <Text>
+        New color palette: "
+        {newColorPalette
+          ? JSON.stringify(newColorPalette, null, 2)
+          : String(newColorPalette)}
+        "
+      </Text> */}
       <FlatList
         data={colorPalettes}
         renderItem={({ item }) => {
@@ -49,6 +69,14 @@ export const Home = ({ navigation }) => {
         keyExtractor={(item) => item.paletteName}
         refreshing={isRefreshing}
         onRefresh={handleRefresh}
+        ListHeaderComponent={
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('ColorPaletteModal')}
+          >
+            <Text style={styles.buttonText}>Add a color scheme</Text>
+          </TouchableOpacity>
+        }
       />
     </View>
   );
@@ -59,5 +87,17 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     flex: 1,
     padding: 16,
+  },
+  button: {
+    backgroundColor: 'dodgerblue',
+    marginBottom: 32,
+    padding: 16,
+    borderRadius: 4,
+  },
+  buttonText: {
+    color: 'white',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });
